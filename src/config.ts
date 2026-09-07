@@ -357,8 +357,8 @@ export const DEFAULT_CONFIG: ConfigType = {
       heading: { en: "Kindly Respond", am: "እባክዎን ይመዝገቡ" },
       sub: { en: "Please respond to help us plan coordinates beautifully.", am: "ዝገጅቱን በሚገባ እንድናስተካክል እባክዎን ምላሽዎን ያሳውቁን።" },
       monthsEth: {
-        en: "ጥር,የካቲት,መጋቢት,ሚያዝያ,ግንቦት,ሰኔ,ሐምሌ,ነሐሴ,መስከረም,ጥቅምት,ኅዳር,ታኅሣሥ",
-        am: "ጥር,የካቲት,መጋቢት,ሚያዝያ,ግንቦት,ሰኔ,ሐምሌ,ነሐሴ,መስከረም,ጥቅምት,ኅዳር,ታኅሣሥ"
+        en: "Meskerem,Tikimt,Hidar,Tahsas,Tir,Yekatit,Megabit,Miazia,Ginbot,Sene,Hamle,Nehase,Pagume",
+        am: "መስከረም,ጥቅምት,ኅዳር,ታኅሣሥ,ጥር,የካቲት,መጋቢት,ሚያዝያ,ግንቦት,ሰኔ,ሐምሌ,ነሐሴ,ጳጉሜ"
       },
       weekdays: {
         en: "Su,Mo,Tu,We,Th,Fr,Sa",

@@ -4,6 +4,8 @@ import { useLanguage } from '../LanguageContext';
 import { motion } from 'motion/react';
 import { trackEvent } from '../utils/analytics';
 
+import { generateEthiopianCalendarDays } from '../utils/ethiopianCalendar';
+
 // Dynamic Calendar Days builder
 const generateCalendarDays = (targetDate: Date) => {
   const year = targetDate.getUTCFullYear();
@@ -41,23 +43,20 @@ export default function SaveTheDate({ bgClass }: { bgClass?: string; key?: React
   if (!config.sections?.saveTheDate) return null;
 
   const targetDate = new Date(config.countdownTarget || "2026-09-20T16:00:00Z");
-  const dayNum = targetDate.getUTCDate();
+  const isAmharic = language === 'am';
+
+  const ethCalendar = generateEthiopianCalendarDays(targetDate);
+  const dayNum = isAmharic ? ethCalendar.ethDate.day : targetDate.getUTCDate();
 
   // English month name (e.g., "September 2026")
   const englishMonthYear = targetDate.toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-  // Amharic month name mapped to approximate Ethiopian Month & Year
-  const getAmharicMonthYear = (d: Date) => {
-    const gMonth = d.getUTCMonth();
-    const gYear = d.getUTCFullYear();
-    const isAfterMeskerem = gMonth >= 8; // September is 8
-    const etYear = gYear - (isAfterMeskerem ? 7 : 8);
-    const etMonths = t('calendar.monthsEth', 'ጥር,የካቲት,መጋቢት,ሚያዝያ,ግንቦት,ሰኔ,ሐምሌ,ነሐሴ,መስከረም,ጥቅምት,ኅዳር,ታኅሣሥ').split(',');
-    return `${etMonths[gMonth]} ${etYear}`;
-  };
+  // Amharic month name mapped to Ethiopian Month & Year
+  const etMonths = t('calendar.monthsEth', 'መስከረም,ጥቅምት,ኅዳር,ታኅሣሥ,ጥር,የካቲት,መጋቢት,ሚያዝያ,ግንቦት,ሰኔ,ሐምሌ,ነሐሴ,ጳጉሜ').split(',');
+  const amharicMonthName = etMonths[ethCalendar.ethDate.month - 1] || ethCalendar.monthNameAm;
+  const amharicMonthYear = `${amharicMonthName} ${ethCalendar.ethDate.year} ዓ.ም`;
 
-  const amharicMonthYear = getAmharicMonthYear(targetDate);
-  const CALENDAR_DAYS = generateCalendarDays(targetDate);
+  const CALENDAR_DAYS = isAmharic ? ethCalendar.daysList : generateCalendarDays(targetDate);
 
   const weekdays = t('calendar.weekdays', 'Su,Mo,Tu,We,Th,Fr,Sa').split(',');
 
